@@ -1,28 +1,30 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLoaderData, useParams } from "react-router-dom";
 import { axiosInstance } from "../../services/axiosInstace";
 
 const Details = () => {
 
-  const { id } = useParams()
- const [product , setProduct]= useState({})
+  // const { id } = useParams()
 
-  const getDetails = async () => {
-    try {
+   const post = useLoaderData()
+  // const [product, setProduct] = useState({})
 
-      let res = await axiosInstance.get(`/products/${id}`)
-      console.log(res);
-      setProduct(res.data)
-    } catch (err) {
-      console.log(err);
+  // const getDetails = async () => {
+  //   try {
 
-    }
+  //     let res = await axiosInstance.get(`/posts/${id}`)
+  //     console.log(res);
+  //     setProduct(res.data)
+  //   } catch (err) {
+  //     console.log(err);
 
-  }
+  //   }
+
+  // }
 
   useEffect(() => {
 
-    getDetails()
+    // getDetails()
 
   }, [])
 
@@ -32,11 +34,22 @@ const Details = () => {
 
   return (
     <>
-      <h1>{product.title}</h1>
-      <p>{product.description}</p>
-    {product.price &&  <p>{product.price}</p> }  
+      <h1>{post.title}</h1>
+      <p>{post.body}</p>
+      {/* {product.price &&  <p>{product.price}</p> }   */}
     </>
   );
 }
 
 export default Details;
+
+
+export const detailsLoader = async ({params}) => {
+ 
+   
+
+  let res = await axiosInstance.get(`/posts/${params.id}`)
+  // console.log(res);
+
+  return res.data
+}

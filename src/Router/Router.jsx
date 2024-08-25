@@ -11,8 +11,9 @@ import Footer from './../components/Footer/Footer';
 const Router = () => {
     return (
         <>
+         
             <BrowserRouter>
-                <Header />
+            <Header />
                 <div className="m-5">
                     <Routes>
 
