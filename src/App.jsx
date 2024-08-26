@@ -9,10 +9,13 @@ import Contact from './pages/Contact/Contact';
 import Products from './pages/Products/Products';
 import Details, { detailsLoader } from './pages/Products/Details';
 import Notfound from './pages/NotFound/Notfound';
-import React from 'react';
+import React, { useState } from 'react';
 import Error from './components/Error/Error';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
+import { ThemeProvider } from './contexts/theme';
+import Protected from './components/Protected/Protected';
+import { AuthProvider } from './contexts/Auth';
 
 
 
@@ -29,7 +32,7 @@ const router = createBrowserRouter([
       { index: true, element: <Home /> }
       , { path: "/about", element: <React.Suspense fallback={<h1>Loading...</h1>}><About /></React.Suspense> },
       { path: "/contact", element: <Contact />, errorElement: <Error /> },
-      { path: "/products", element: <Products /> },
+      { path: "/products", element: <Protected x={10}><Products/></Protected> },
       { path: "/details/:id", element: <Details />, loader: detailsLoader, errorElement: <Error />, },
       { path: "*", element: <Notfound /> }
 
@@ -39,13 +42,29 @@ const router = createBrowserRouter([
 
 function App() {
 
+ const [theme,setTheme]  =useState("light")
+
+ const [isAuth,setAuth]  =useState(false)
 
   return (
     <>
 
-      <Provider store={store}>
 
-        <RouterProvider router={router} />
+      <Provider store={store}>
+        <ThemeProvider value={{theme,setTheme}}>
+          <AuthProvider value={{isAuth,setAuth}}>
+
+          <RouterProvider router={router} />
+
+
+          </AuthProvider>
+          
+
+
+
+
+
+        </ThemeProvider>
       </Provider>
       {/* <Router/> */}
 
@@ -54,3 +73,7 @@ function App() {
 }
 
 export default App
+
+
+
+// []   ,  >> api call  >> [{},{},{}]

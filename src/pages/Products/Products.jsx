@@ -4,32 +4,23 @@ import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import { useNavigate } from "react-router-dom";
-import { axiosInstance } from "../../services/axiosInstace";
-import { useSelector } from "react-redux";
+// import { axiosInstance } from "../../services/axiosInstace";
+import { useDispatch, useSelector } from "react-redux";
 import { Spinner } from "react-bootstrap";
+import { postsAction } from "../../store/slices/posts";
 const Products = () => {
 
   const loader = useSelector((state) => state.loader.loader)
+ const {posts,error} =useSelector((state)=>state.posts)
+ const dispatch =useDispatch()
 
   const navigate = useNavigate()
 
-  const [products, setProducts] = useState([])
+  // const [products, setProducts] = useState([])
 
   useEffect(() => {
-
-    axiosInstance.get("/posts", {
-      params: { limit: 5, sort: 'desc' },
-      // headers:{Authorization:"kjfgiufd545fgkjh"}
-    }).then((res) => {
-      console.log(res.data);
-
-      setProducts(res.data)
-
-    }).catch((err) => {
-
-      console.log(err);
-
-    })
+ 
+    dispatch(postsAction())
 
 
 
@@ -38,13 +29,13 @@ const Products = () => {
 
   return (
     <>
-      {(loader) ?
+      {  (error)?<h1>{error}</h1> :(loader) ?
         <div className="d-flex justify-content-center">
           <Spinner animation="border" role="status" >
             <span className="visually-hidden">Loading...</span>
           </Spinner>
         </div> : <Row xs={1} md={3} className="g-4">
-          {products.map((prd) => (
+          {posts.map((prd) => (
             <Col key={prd.id}>
               <Card>
                 {/* <Card.Img variant="top"  src={prd.image} /> */}
