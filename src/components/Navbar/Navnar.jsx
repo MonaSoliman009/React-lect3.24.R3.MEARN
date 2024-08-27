@@ -7,11 +7,15 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { themeContext } from './../../contexts/theme';
 import Button from '../Button/Buuton';
+import { authContext } from './../../contexts/Auth';
 const Header = () => {
 
 
     const lang =useSelector((state)=>state.lang.language)
+    const translate =useSelector((state)=>state.lang.translate)
+
     const {theme,setTheme}  = useContext(themeContext)
+  const {isAuth,setAuth} = useContext(authContext)
 
     return (
         <>
@@ -21,12 +25,15 @@ const Header = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-           <Link to="/">Home {lang}</Link>
-           <Link to="/about" className="mx-5">About Us</Link>
+           <Link to="/">{translate.Home} {lang}</Link>
+           <Link to="/about" className="mx-5">{translate.About}</Link>
            
-           <Link to="/contact">Contact</Link>
-           <Link to="/products" className="mx-5">Products</Link>
-
+           <Link to="/contact">{translate.Contact}</Link>
+           <Link to="/products" className="mx-5">{translate.Products}</Link>
+         {(!isAuth)?<Link to="/login">{translate.Login}</Link>:<Link to="/login" onClick={()=>{
+          localStorage.removeItem("token")
+          setAuth(false)
+         }}>Logout</Link>}  
            <p>{theme}</p>
            <Button theme={theme} setTheme={setTheme}/>
 

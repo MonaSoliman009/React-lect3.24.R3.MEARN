@@ -1,11 +1,13 @@
 // import { useNavigate } from "react-router-dom";
 // import styles from './Contact.module.css'
-import { useDispatch, useSelector } from "react-redux";
-import { decreaseCounter, increaseCounter } from "../../store/slices/counter";
+
+import { useCounter } from "../../Hooks/useCounter";
+// import { decreaseCounter, increaseCounter } from "../../store/slices/counter";
+
 const Contact = () => {
 
-    const counter = useSelector((state) => state.counter.counter)
-    const dispatch = useDispatch()
+ const [counter , decrease , increase] =  useCounter()
+
     // const navigate = useNavigate()
 
 
@@ -18,10 +20,10 @@ const Contact = () => {
 
     return (
         <>
-            <button className="btn btn-warning" onClick={()=>{dispatch(decreaseCounter())}}>-</button>
+            <button className="btn btn-warning" onClick={decrease}>-</button>
 
             <h1>Counter is {counter}</h1>
-            <button className="btn btn-success" onClick={()=>{dispatch(increaseCounter())}}>+</button>
+            <button className="btn btn-success" onClick={increase}>+</button>
 
 
             {/* <h1 className={styles.test}>Contact Us </h1>

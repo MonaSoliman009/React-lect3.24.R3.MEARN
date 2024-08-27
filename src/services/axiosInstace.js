@@ -4,7 +4,7 @@ import { changeLoader } from '../store/slices/loader';
 
 export const axiosInstance=axios.create({
     baseURL:"https://jsonplaceholder.typicode.com/",
-    // headers:{},
+    headers:{lang:"ar"},
     // timeout:5000,
     // params:{api_key:"jkhuuyuy"}
 })

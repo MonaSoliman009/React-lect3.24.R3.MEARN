@@ -9,6 +9,7 @@ const Home = () => {
   const handleChange=()=>{
     
     dispatch(changeLanguage((lang=="en")?"ar":"en"))
+    localStorage.setItem("lang",(lang=="en")?"ar":"en")
   }
   
   

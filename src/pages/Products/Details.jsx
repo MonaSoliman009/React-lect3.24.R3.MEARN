@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLoaderData, useParams } from "react-router-dom";
 import { axiosInstance } from "../../services/axiosInstace";
+import { getPostById } from "../../services/posts";
 
 const Details = () => {
 
@@ -48,7 +49,7 @@ export const detailsLoader = async ({params}) => {
  
    
 
-  let res = await axiosInstance.get(`/posts/${params.id}`)
+  let res = await getPostById(params.id);
   // console.log(res);
 
   return res.data
